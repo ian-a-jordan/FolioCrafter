@@ -1,0 +1,24 @@
+.page-container {
+    position: relative; /* Create a stacking context */
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .background-layer {
+    position: fixed;  /* or absolute if you have a defined parent */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+  }
+  
+  .foreground-layer {
+    position: relative;
+    z-index: 200; /* Higher than the background */
+    /* Optionally: center the content, restrict width, add padding */
+    margin: auto;
+    width: fit-content; /* or a fixed/max-width */
+    padding: 1rem;
+  }
+  

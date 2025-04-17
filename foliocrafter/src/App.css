@@ -1,0 +1,34 @@
+
+
+.logo {
+  will-change: filter, transform;
+  transition: filter 300ms;
+  animation: logo-sway 3s ease-in-out infinite alternate;
+  border-radius: 50%;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-sway {
+  from {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(30deg);
+  }
+}
+
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

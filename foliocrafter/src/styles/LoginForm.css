@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Eighties Horror';
+    src: url('../assets/fonts/EightiesHorror.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.stranger-things {
+    filter: url(#bevel) url(#bloom);
+}
+
+.eighties {
+    font-family: 'Eighties Horror' !important;
+    line-height: 1em;
+    letter-spacing: 6px;
+}

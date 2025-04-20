@@ -23,6 +23,7 @@ import NeonFilter from '../../assets/NeonFilter';
 import "../../styles/LoginForm.css"
 import { useColorScheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import RippleWrapper from '../buttons/RippleWrapper';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -136,6 +137,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
     return isValid;
   };
+  
 
   return (
     <AppTheme {...props}>
@@ -269,13 +271,17 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               label="Remember me"
             />
             <ForgotPassword open={open} handleClose={handleClose} />
-            <Button
-              type="submit" // TODO possibly change the functionality here for better authentication
-              fullWidth
-              variant="contained"
-            >
-              Sign in
-            </Button>
+
+            <RippleWrapper>
+              <Button
+                type="submit" // TODO possibly change the functionality here for better authentication
+                fullWidth
+                variant="contained"
+              >
+                Sign in
+              </Button>
+            </RippleWrapper>
+
             <Link
               component="button"
               type="button"
@@ -291,26 +297,30 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 color: textColor
               }}>or</Divider>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => alert('Sign in with Google')}
-                startIcon={<GoogleIcon />}
-                sx={{
-                  color: textColor
-                }}
-              >
-                Sign in with Google
-              </Button>
+
+              <RippleWrapper>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onClick={() => alert('Sign in with Google')}
+                  startIcon={<GoogleIcon />}
+                  sx={{
+                    color: textColor
+                  }}
+                >
+                  Sign in with Google
+                </Button>
+              </RippleWrapper>
+
               <Typography sx={{ textAlign: 'center' }}>
                 Don&apos;t have an account?{' '}
                 <Link
                   href="/material-ui/getting-started/templates/sign-in/"
                   variant="body2"
-                  sx={{ 
+                  sx={{
                     alignSelf: 'center',
                     color: textColor
-                   }}
+                  }}
                 >
                   Sign up
                 </Link>

@@ -1,20 +1,53 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { useState } from 'react';
+import {
+    Box,
+} from '@mui/material';
+import CreateSummary from './CreateSummary';
+import AppTheme from '../theme/AppTheme';
+import { useColorScheme } from '@mui/material/styles';
+import Projects from './Projects';
+import MainAppBar from '../components/MainAppBar';
+import ResumeProfileForm from '../components/forms/ResumeProfileForm';
 
 const MainPage = () => {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '4rem' }}>
-      <Card sx={{ backgroundColor: '#2196f3', color: 'white', padding: 2, minWidth: 300 }}>
-        <CardContent>
-          <Typography variant="h5" component="div">
-            Welcome to the Main Page!
-          </Typography>
-          <Typography variant="body2">
-            You successfully redirected 🎉
-          </Typography>
-        </CardContent>
-      </Card>
-    </div>
-  );
+    const [selectedTab, setSelectedTab] = useState('Create Summary');
+
+    const { mode } = useColorScheme();
+    const isDark = mode === 'dark';
+
+    const summaries = [
+        { title: 'Project 1', description: 'Description of project 1' },
+        { title: 'Project 2', description: 'Description of project 2' },
+        { title: 'Project 3', description: 'Description of project 3' },
+    ];
+
+    const renderContent = () => {
+        switch (selectedTab) {
+            case 'Create Summary':
+                return <CreateSummary />;
+            case 'Projects':
+                return <Projects summaries={summaries} />;
+            case 'Resume Profile':
+                return <ResumeProfileForm />;
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <AppTheme>
+            <Box sx={{ flexGrow: 1 }}>
+                <MainAppBar
+                    selectedTab={selectedTab}
+                    setSelectedTab={setSelectedTab}
+                    isDark={isDark}
+                />
+                <Box sx={{ p: 3 }}>
+                    {renderContent()}
+                </Box>
+            </Box>
+        </AppTheme>
+    );
 };
 
 export default MainPage;

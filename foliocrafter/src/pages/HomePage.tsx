@@ -22,7 +22,6 @@ function HomePage () {
         </Box>
         </AppTheme>
       );
-
 }
 
 export default HomePage

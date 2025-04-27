@@ -122,6 +122,31 @@ const MainAppBar: React.FC<MainAppBarProps> = ({
                                 Projects
                             </Button>
                         </RippleWrapper>
+
+                        <RippleWrapper>
+                            <Button
+                                startIcon={<AccountCircleIcon />}
+                                onClick={() => setSelectedTab('Resume Preview')}
+                                sx={{
+                                    fontSize: '1.1rem',
+                                    py: 1.5,
+                                    px: 3,
+                                    backgroundColor: selectedTab === 'Resume Preview' ? 'white' : 'transparent',
+                                    '& .MuiSvgIcon-root': {
+                                        color: selectedTab === 'Resume Preview' ? (isDark ? 'black' : 'black') : 'white',
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: selectedTab === 'Resume Preview' ? '#f0f0f0' : 'rgba(255,255,255,0.1)',
+                                    },
+                                    '&.MuiButton-root': {
+                                        color: selectedTab === 'Resume Preview' ? (isDark ? 'black' : 'black') : 'white !important',
+                                    },
+                                }}
+                            >
+                                Preview
+                            </Button>
+                        </RippleWrapper>
+
                     </Box>
 
                     <IconButton

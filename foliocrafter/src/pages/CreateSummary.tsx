@@ -87,7 +87,6 @@ const CreateSummary: React.FC = () => {
       <RippleWrapper>
         <Button
           variant="contained"
-          color="primary"
           onClick={handleAnalyze}
           disabled={!repoUrl || isLoading}
           sx={{

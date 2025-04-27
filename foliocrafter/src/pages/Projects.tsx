@@ -1,67 +1,97 @@
-import { useState } from 'react';
-import { Box, Typography, List, ListItem, Checkbox, Button, Card, CardContent } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Grid } from '@mui/material';
+import DropZone from '../components/DropZone';
+import DragItem, { ProjectSummary } from '../components/DragItem';
+import RippleWrapper from '../components/buttons/RippleWrapper';
+import { useColorScheme } from '@mui/material/styles';
 
-// Define a type for the project summary
-type ProjectSummary = {
-    title: string;
-    description: string;
-};
-
-interface ProjectListProps {
-    summaries: ProjectSummary[];
+interface ProjectsProps {
+  summaries: ProjectSummary[];
 }
 
-const ProjectList = ({ summaries }: ProjectListProps) => {
-    const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+const Projects: React.FC<ProjectsProps> = ({ summaries }) => {
+  const [availableProjects, setAvailableProjects] = useState<ProjectSummary[]>(summaries);
+  const [selectedProjects, setSelectedProjects] = useState<ProjectSummary[]>([]);
 
-    const handleSelectProject = (project: string) => {
-        setSelectedProjects((prev) => 
-            prev.includes(project)
-                ? prev.filter((p) => p !== project)
-                : [...prev, project]
-        );
-    };
+  const { mode } = useColorScheme();
+  const textColor = mode === 'dark' ? '#000000' : '#FFF';
 
-    const handleGenerateResume = () => {
-        // Call GPT API to generate resume from selected projects
-        console.log('Generating resume for projects:', selectedProjects);
-    };
+  const handleSelect = (item: ProjectSummary) => {
+    // Prevent duplicates
+    if (selectedProjects.find(p => p.title === item.title)) return;
 
-    return (
-        <Box sx={{ maxWidth: 700, mx: 'auto', mt: 5, p: 2 }}>
-            <Typography variant="h5" gutterBottom>
-                Your Projects
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-                Select up to 3 projects to generate your resume.
-            </Typography>
-            <List>
-                {summaries.map((project, index) => (
-                    <ListItem key={index} sx={{ mb: 2 }}>
-                        <Card sx={{ width: '100%', backgroundColor: '#f5f5f5' }}>
-                            <CardContent>
-                                <Typography variant="h6">{project.title}</Typography>
-                                <Typography variant="body2">{project.description}</Typography>
-                                <Checkbox
-                                    checked={selectedProjects.includes(project.title)}
-                                    onChange={() => handleSelectProject(project.title)}
-                                />
-                                Select this project
-                            </CardContent>
-                        </Card>
-                    </ListItem>
-                ))}
-            </List>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleGenerateResume}
-                disabled={selectedProjects.length === 0 || selectedProjects.length > 3}
-            >
-                Generate Resume
-            </Button>
-        </Box>
-    );
+    setAvailableProjects(prev => prev.filter(p => p.title !== item.title));
+    setSelectedProjects(prev => [...prev, item]);
+  };
+
+  const handleReturn = (item: ProjectSummary) => {
+    // Prevent duplicates
+    if (availableProjects.find(p => p.title === item.title)) return;
+
+    setSelectedProjects(prev => prev.filter(p => p.title !== item.title));
+    setAvailableProjects(prev => [...prev, item]);
+  };
+
+  const handleGenerateResume = () => {
+    console.log('Generating resume for:', selectedProjects);
+  };
+
+  return (
+    <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 15, p: 2 }}>
+      <Grid container spacing={2} >
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <DropZone title="Available Projects" onDrop={handleReturn}>
+            {availableProjects.map((project) => (
+              <DragItem key={project.title} project={project} />
+            ))}
+          </DropZone>
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <DropZone title="Selected Projects (max 3)" onDrop={handleSelect}>
+            {selectedProjects.map((project) => (
+              <DragItem key={project.title} project={project} />
+            ))}
+          </DropZone>
+        </Grid>
+      </Grid>
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mt: 4, // margin top if you want some spacing
+        }}
+      >
+        <RippleWrapper>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleGenerateResume}
+            disabled={selectedProjects.length === 0}
+            sx={{
+              color: `${textColor} !important`, // ensure the text is visible
+              justifyContent: 'center',
+              px: 4,
+              py: 1.5,
+              fontWeight: 'bold',
+              borderRadius: 2,
+              boxShadow: 3,
+              textTransform: 'none',
+              transition: 'transform 0.2s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: 6,
+              },
+            }}
+          >
+            Export
+          </Button>
+        </RippleWrapper>
+      </Box>
+    </Box>
+  );
 };
 
-export default ProjectList;
+export default Projects;

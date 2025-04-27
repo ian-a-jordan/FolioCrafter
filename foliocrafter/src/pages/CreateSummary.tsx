@@ -68,6 +68,9 @@ const CreateSummary: React.FC = () => {
     <Box sx={{ maxWidth: 700, mx: 'auto', mt: 5, p: 2 }}>
       <Typography variant="h4" gutterBottom>
         Generate Your Project Summary
+          <h6>
+            Currently this is all dummy data, Backend is under construction now
+          </h6>
       </Typography>
       <Typography variant="body1" sx={{ mb: 3 }}>
         Paste the URL to a public GitHub repository and we’ll analyze the README file for you.
@@ -84,30 +87,30 @@ const CreateSummary: React.FC = () => {
           sx={sharedFieldSx}
         />
 
-      <RippleWrapper>
-        <Button
-          variant="contained"
-          onClick={handleAnalyze}
-          disabled={!repoUrl || isLoading}
-          sx={{
-            width: '100%',
-            px: 4,
-            py: 1.5,
-            fontWeight: 'bold',
-            borderRadius: 2,
-            boxShadow: 3,
-            textTransform: 'none',
-            transition: 'transform 0.2s ease',
-            color: `${textColor} !important`, // ensure the text is visible
-            '&:hover': {
-              transform: 'scale(1.05)',
-              boxShadow: 6,
-            },
-          }}
-        >
-          {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Analyze'}
-        </Button>
-      </RippleWrapper>
+        <RippleWrapper>
+          <Button
+            variant="contained"
+            onClick={handleAnalyze}
+            disabled={!repoUrl || isLoading}
+            sx={{
+              width: '100%',
+              px: 4,
+              py: 1.5,
+              fontWeight: 'bold',
+              borderRadius: 2,
+              boxShadow: 3,
+              textTransform: 'none',
+              transition: 'transform 0.2s ease',
+              color: `${textColor} !important`, // ensure the text is visible
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: 6,
+              },
+            }}
+          >
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Analyze'}
+          </Button>
+        </RippleWrapper>
       </Box>
 
       {summary && (
